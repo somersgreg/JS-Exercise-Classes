@@ -41,31 +41,23 @@ class Airplane {
 */
 
 class Person {
-  constructor (name, age){
+  constructor (name,age) {
     this.name = name;
     this.age = age;
     this.stomach = [];
   }
-  eat(someFood){
-    if(this.stomach.length < 10){
+  eat(someFood) {
+    if (this.stomach.length <10){
       this.stomach.push(someFood);
-      }else{
-        return this.stomach;
-      }
-    }
-
-  toString(){
-      return `${this.name} ${this.age}`
-    }
+    } // else/return here is implied
+  }
   poop(){
-    if(this.stomach.length = 0){
-     function empty(stomach){
-      stomach = [];
-     }
-    }
+    this.stomach=[];
+  }
+  toString(){
+    return `${this.name}, ${this.age}`;
   }
 }
-
 /*
   TASK 2
     - Write a Car class whose constructor initializes `model` and `milesPerGallon` from arguments.
@@ -81,31 +73,35 @@ class Person {
 */
 
 class Car {
-  constructor(model, milesPerGallon){
-    this.model = model;
+  constructor (model,milesPerGallon){
+    this.model = model; // have to init the arguments - I forgot.
     this.milesPerGallon = milesPerGallon;
-    this.tank = 0;
+    this.tank = 0;  // im tempted to make this an object like above.
     this.odometer = 0;
   }
-
   fill(gallons){
-    this.tank += gallons;
+    return this.tank += gallons; // since its not an array I can just equal add.  Will ++ work?
   }
-
-  drive(distance){
-    let driveableMiles = this.tank * this.milesPerGallon;
-    let gallonsNeeded = distance / this.milesPerGallon;
-    if (driveableMiles < distance){
+  drive(distance) {
+    if (this.tank >= distance / this.milesPerGallon) {
+      this.odometer += distance;
+      this.tank -= distance / this.milesPerGallon;
+    } else {
+      this.odometer += this.tank * this.milesPerGallon;
       this.tank = 0;
-      this.odometer = this.odometer + driveableMiles
-      return `I ran out of fuel at ${this.odometer} miles!`;
-    }else if (driveableMiles > distance){
-      this.odometer = this.odometer + distance;
-      this.tank = this.tank - gallonsNeeded;
+      return `I ran out of fuel a ${this.odometer} miles!`;
     }
   }
-
 }
+//   drive(distance){  // I wanted to keep the math simple but the empty state is wrong
+//     if (this.tank>0){
+//       this.odometer += distance;  // its += and -=
+//       this.tank -= (distance* (1 / (this.milesPerGallon))); // goes down 1gallon for every 1milesPerGallon
+//     }else if(this.tank<=0){  // must be <= or >= not =< or =>. gator first.
+//     return `I ran out of fuel at ${this.odometer} miles!`
+//     }
+//   }
+// };
 
 /*
   TASK 3
@@ -120,15 +116,15 @@ class Car {
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
-  constructor(attributes){
-    this.name = attributes.name,
-    this.age = attributes.age,
-    this.location = attributes.location
+  constructor (object){
+    this.name = object.name;  // I didnt get what meaning adding object gives and how to call it.
+    this.age = object.age;
+    this.location = object.location;
   }
   speak(){
-    return `Hello my name is ${this.name}, I am from ${this.location}.`
+    return `Hello my name is ${this.name}, I am from ${this.location}.`;  // missed the period.  ALSO FORGOT THIS. before name and location!
   }
-}
+}  // I got this
 
 /*
   TASK 4
@@ -144,20 +140,23 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor extends Lambdasian {
-  constructor(attributes){
-    super(attributes);
-    this.specialty = attributes.specialty;
-    this.favLanguage = attributes.favLanguage;
-    this.catchPhrase = attributes.catchPhrase;
+class Instructor extends Lambdasian{  // add 'extends Lambdasian'
+  constructor(object){
+    super(object);  // requires super()
+    this.specialty = object.specialty;
+    this.favLanguage = object.favLanguage;
+    this.catchPhrase = object.catchPhrase;
   }
   demo(subject){
-    return `Today we are learning about ${subject}`
+    return `Today we are learning about ${subject}` //  forgot return. no this here?
   }
   grade(student, subject){
-    return `${student} receives a perfect score on ${subject}`
+    return `${student.name} receives a perfect score on ${subject}`  // forgot return
   }
-}
+  studentGrade(student) {  // Math is hard.  I need to practice math.
+    student.grade = student.grade + Math.floor(Math.random() * 99) - Math.floor(Math.random() * 99);
+  }
+}  // I got this except where to put extends and super.
 
 /*
   TASK 5
@@ -167,7 +166,7 @@ class Instructor extends Lambdasian {
         + `previousBackground` i.e. what the Student used to do before Lambda School
         + `className` i.e. CS132
         + `favSubjects`. i.e. an array of the student's favorite subjects ['HTML', 'CSS', 'JS']
-    - The constructor calls the parent constructor passing to it what it needs.
+    - The constructor calls the parent constructor passing to it what it needs. <= this i dont get
     - The constructor should also initialize `previousBackground`, `className` and `favSubjects` properties on the instance.
     - Student instances have the following methods:
         + `listSubjects` a method that returns all of the student's favSubjects in a single string: `Loving HTML, CSS, JS!`.
@@ -175,10 +174,36 @@ class Instructor extends Lambdasian {
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
 class Student extends Lambdasian{
-  constructor(attributes{
-    super(attributes);
-    
+  constructor(object){
+    super(object);  // forgot super again.
+    this.previousBackground = object.previousBackground;
+    this.className = object.className;
+    this.favSubjects = object.favSubjects;
+    this.grade = 50;
   }
+
+  listSubjects() {
+    return `Loving ${this.favSubjects}`;
+  }
+
+  PRAssignment(subject) {
+    return `${this.name} has submitted a PR for ${subject}`;
+  }
+
+  sprintChallenge(subject) {
+    return `${this.name} has begun sprint challenge on ${subject}`;
+  }
+
+  graduate() {
+    if (this.grade > 70) {
+      return `${this.name} is ready to graduate!`
+    }
+
+    else {
+      return `${this.name} assignments will need to be graded!`
+    }
+  }
+
 }
 
 /*
@@ -194,9 +219,22 @@ class Student extends Lambdasian{
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
+class ProjectManager extends Instructor{
+  constructor(object){
+    super(object);
+    this.gradClassName = object.gradClassName;
+    this.favInstructor = object.favInstructor;
+  }
 
+  standUp(channel){
+    return `${this.name} announces to ${channel}, @channel standy times!`;
+  }  // Im confused when its this and when not.  I wouldve gotten this wrong.
+
+  debugsCode(student, subject){
+    return `${this.name} debugs ${student.name}'s code on ${subject}`;
+  }
 }
+
 
 /*
   STRETCH PROBLEM (no tests!)
