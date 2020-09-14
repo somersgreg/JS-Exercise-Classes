@@ -1,4 +1,4 @@
-# The _class_ Syntax
+dfd# The _class_ Syntax
 
 This challenge focuses on using the new for ES6 `class` syntax.
 
@@ -37,7 +37,7 @@ Once you begin, you will have 15 minutes to answer the questions [here](https://
 
 The completion of these questions is mandatory for MVP. However, passing the quiz doesn't affect your standing as a Lambda School student whatsoever. This is Lambda School testing itself! Please answer honestly and to the best of your ability without using external references.
 
-### Task 3 - Stretch 
+### Task 3 - Stretch
 
 There are stretch goals found throughout `index.js`. Complete these after you have all of your tests passing for MVP!
 
